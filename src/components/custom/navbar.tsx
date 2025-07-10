@@ -9,15 +9,11 @@ import { ThemeToggler } from "./theme-toggler";
 import Logo from "@/assets/images/logo.png";
 import LogoBlack from "@/assets/images/logoblack.png";
 import { GithubIcon, LinkedInIcon } from "@/assets/icons/brands";
-import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
 export default function Navbar() {
-  const pathname = usePathname();
   const { theme } = useTheme();
-  console.log(theme);
 
   return (
     <nav className="bg-background sticky top-0 z-1">

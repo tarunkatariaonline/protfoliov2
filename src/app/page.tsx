@@ -1,10 +1,8 @@
 import ContactForm from "@/components/custom/contact-form";
 import Navbar from "@/components/custom/navbar";
-import { XPattern } from "@/components/custom/pattern";
 import { Button } from "@/components/ui/button";
 
 import {
-  ArrowDownToLineIcon,
   FileIcon,
   CogIcon,
   SquareArrowOutUpRightIcon,
