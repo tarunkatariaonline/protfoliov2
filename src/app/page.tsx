@@ -249,7 +249,7 @@ export default function Home() {
             return (
               <div
                 key={index}
-                className={`mx-4 my-16 flex flex-col items-center justify-between gap-8 md:${index % 2 == 0 ? "flex-row" : "flex-row-reverse"}`}
+                className={`mx-4 my-16 flex items-center justify-between gap-8 max-md:flex-col ${index % 2 == 0 ? "flex-row" : "flex-row-reverse"}`}
               >
                 {/* Text Content */}
                 <div className="max-w-md space-y-4">
