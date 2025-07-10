@@ -13,7 +13,7 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 
 export default function Navbar() {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
 
   return (
     <nav className="bg-background sticky top-0 z-1">
@@ -21,7 +21,7 @@ export default function Navbar() {
         <div className="mx-auto flex h-12.5 w-full items-center gap-x-4 px-4 py-2">
           <Link href={"/"}>
             <Image
-              src={theme === "dark" ? Logo : LogoBlack}
+              src={resolvedTheme === "dark" ? Logo : LogoBlack}
               className="h-[50px] w-[50px]"
               alt="logo"
             />
@@ -62,7 +62,7 @@ export default function Navbar() {
 }
 
 export function NavMenu() {
-  const { theme } = useTheme();
+  const { resolvedTheme } = useTheme();
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>
@@ -74,7 +74,7 @@ export function NavMenu() {
         <div className="grid grid-cols-1 place-items-center gap-4 p-4 font-mono">
           <Link href={"/"} className="py-10">
             <Image
-              src={theme === "dark" ? Logo : LogoBlack}
+              src={resolvedTheme === "dark" ? Logo : LogoBlack}
               className="h-[50px] w-[50px]"
               alt="logo"
             />
