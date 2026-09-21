@@ -3,59 +3,64 @@
 import * as React from "react";
 import NumberFlow from "@number-flow/react";
 
-const loc = 82570;
-const bugsFixed = 1695;
-const problemsSolved = 780;
+import { stats } from "@/lib/data";
+import { cn } from "@/lib/utils";
 
-export default function HomeMetrics() {
+export default function Metrics() {
+  const ref = React.useRef<HTMLDivElement>(null);
   const [start, setStart] = React.useState(false);
 
   React.useEffect(() => {
-    setStart(true);
+    const node = ref.current;
+    if (!node) return;
+
+    if (typeof IntersectionObserver === "undefined") {
+      setStart(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStart(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <div className="mx-auto mt-20 w-full max-w-3xl sm:mt-0 md:border-x">
-      <div className="grid h-96 grid-rows-3 divide-y border border-x-0 border-b-0 sm:h-36 sm:grid-cols-3 sm:grid-rows-1 sm:divide-x sm:divide-y-0 sm:border-x md:border-x-0">
-        <div className="flex flex-col items-center justify-center gap-3 p-4 text-center">
-          <strong className="text-4xl font-bold">
+    <div
+      ref={ref}
+      className="grid grid-cols-1 divide-y rounded-2xl border sm:grid-cols-2 sm:divide-y-0 lg:grid-cols-4"
+    >
+      {stats.map((stat, i) => (
+        <div
+          key={stat.label}
+          className={cn(
+            "group hover:bg-secondary/40 space-y-2 p-6 transition-colors sm:p-7",
+            i % 2 === 1 && "sm:border-l",
+            i >= 2 && "sm:border-t lg:border-t-0",
+            i === 2 && "lg:border-l"
+          )}
+        >
+          <strong className="flex items-baseline font-mono text-4xl font-semibold tracking-tighter sm:text-[2.75rem]">
             <NumberFlow
-              value={start ? loc : 0}
-              transformTiming={{ duration: 2000, easing: "ease-out" }}
-              format={{ notation: "compact" }}
+              value={start ? stat.value : 0}
+              transformTiming={{ duration: 1600, easing: "ease-out" }}
             />
+            <span className="text-brand">{stat.suffix}</span>
           </strong>
-          <p className="text-muted-foreground font-mono text-sm">
-            lines of code written
+          <p className="text-sm leading-snug font-medium">{stat.label}</p>
+          <p className="text-muted-foreground font-mono text-xs tracking-tight">
+            {stat.sub}
           </p>
         </div>
-        <div className="flex flex-col items-center justify-center gap-3 p-4 text-center">
-          <strong className="text-4xl font-bold">
-            ~
-            <NumberFlow
-              value={start ? bugsFixed : 0}
-              transformTiming={{ duration: 2000, easing: "ease-out" }}
-              format={{ notation: "compact" }}
-            />
-          </strong>
-          <p className="text-muted-foreground font-mono text-sm">
-            bugs fixed & reviewed
-          </p>
-        </div>
-        <div className="flex flex-col items-center justify-center gap-3 p-4 text-center">
-          <strong className="text-4xl font-bold">
-            <NumberFlow
-              value={start ? problemsSolved : 0}
-              transformTiming={{ duration: 2000, easing: "ease-out" }}
-              format={{ notation: "compact" }}
-            />
-            +
-          </strong>
-          <p className="text-muted-foreground font-mono text-sm">
-            DSA problems solved
-          </p>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }
