@@ -25,7 +25,7 @@ export const profile = {
   github: "https://github.com/tarunkatariaonline",
   linkedin: "https://www.linkedin.com/in/tarunkatariaonline/",
   summary:
-    "Software Engineer with 1.5+ years of experience building and shipping React Native iOS and Android apps for 75+ Shopify D2C brands, plus full-stack work across React.js, Next.js, Node.js and GraphQL. I build custom React Native blocks that brands drop straight into their apps, and spend the rest of my time deep in third-party SDK integrations, analytics and attribution pipelines, conversion funnel optimisation, and putting out production fires under tight SLAs.",
+    "Software Engineer with 1.5+ years building and shipping React Native iOS and Android apps for 75+ Shopify D2C brands, plus full-stack work across React.js, Next.js, Node.js and GraphQL. I build custom React Native blocks that brands drop straight into their apps, and spend the rest of my time deep in SDK integrations, attribution pipelines, conversion funnel optimisation and production firefighting. Lately that has extended to LLM-powered internal tooling — including CRM agents that make debugging merchant integrations far quicker.",
   roles: [
     "React Native Engineer",
     "Full Stack Developer",
@@ -95,7 +95,8 @@ export const experiences: Experience[] = [
       "Delivered 130+ third-party app integrations and SDKs over REST APIs: CRM and push automation (CleverTap, MoEngage, BiteSpeed), express checkouts (GoKwik, Shopflo, Fastrr) and review platforms (Judge.me, Loox).",
       "Architected end-to-end analytics and attribution pipelines (GA4, Facebook Pixel, AppsFlyer, Branch.io, Microsoft Clarity) for high-scale apps, debugging event drop-offs to keep ad attribution accurate.",
       "Optimised Cart, PDP and PLP conversion funnels with dynamic cart progress goals, native upsell blocks, custom variant pickers and React Native deep-link routing for Libas, Powerlook and Zavya.",
-      "Held engineering SLAs through peak sale events by debugging and resolving 14+ P1 release blockers and 75+ P2 production issues for high-traffic merchants in an Agile team."
+      "Held engineering SLAs through peak sale events by debugging and resolving 14+ P1 release blockers and 75+ P2 production issues for high-traffic merchants in an Agile team.",
+      "Built LLM-powered CRM agents that make debugging merchant CRM integrations far quicker, surfacing event and payload issues across CleverTap, MoEngage and BiteSpeed instead of digging through logs by hand."
     ],
     stack: [
       "React Native",
@@ -104,7 +105,8 @@ export const experiences: Experience[] = [
       "Deep Linking",
       "AppsFlyer",
       "CleverTap",
-      "GA4"
+      "GA4",
+      "AI agents"
     ]
   },
   {
@@ -225,37 +227,57 @@ export const projects: Project[] = [
   }
 ];
 
-export const skillGroups = [
-  {
-    title: "Languages",
-    items: ["JavaScript", "TypeScript", "C / C++", "SQL", "HTML / CSS"]
-  },
+export type SkillGroup = {
+  title: string;
+  icon:
+    | "mobile"
+    | "frontend"
+    | "backend"
+    | "ai"
+    | "integrations"
+    | "languages"
+    | "tools";
+  blurb: string;
+  /** Column span on large screens — drives the bento layout. */
+  span?: 2 | 3;
+  items: string[];
+};
+
+/** Order here drives the bento rows: 1+1+1 / 2+1 / 3. */
+export const skillGroups: SkillGroup[] = [
   {
     title: "Mobile",
+    icon: "mobile",
+    blurb: "The core of my day-to-day at Appbrew.",
     items: [
       "React Native",
       "iOS & Android",
       "Shopify app integrations",
+      "Custom native blocks",
       "Deep linking"
     ]
   },
   {
     title: "Frontend",
+    icon: "frontend",
+    blurb: "Interfaces, from storefronts to admin panels.",
     items: [
       "React.js",
       "Next.js",
-      "Redux Toolkit",
       "Tailwind CSS",
+      "Redux Toolkit",
       "Chakra UI",
       "Material UI"
     ]
   },
   {
     title: "Backend",
+    icon: "backend",
+    blurb: "APIs and data layers behind the apps.",
     items: [
       "Node.js",
-      "Express.js",
       "GraphQL",
+      "Express.js",
       "Prisma ORM",
       "PostgreSQL",
       "MongoDB",
@@ -263,7 +285,32 @@ export const skillGroups = [
     ]
   },
   {
+    title: "AI & LLM",
+    icon: "ai",
+    blurb:
+      "LLM-powered product features — natural-language search, tool calling and agents.",
+    span: 2,
+    items: [
+      "LLM APIs",
+      "OpenAI API",
+      "AI agents",
+      "Tool calling",
+      "Prompt engineering",
+      "Streaming responses"
+    ]
+  },
+  {
+    title: "Languages",
+    icon: "languages",
+    blurb: "What I write in.",
+    items: ["JavaScript", "TypeScript", "SQL", "C / C++", "HTML / CSS"]
+  },
+  {
     title: "Integrations & Analytics",
+    icon: "integrations",
+    blurb:
+      "The SDKs commerce apps live on — CRM, express checkout, reviews and attribution.",
+    span: 2,
     items: [
       "CleverTap",
       "MoEngage",
@@ -284,11 +331,13 @@ export const skillGroups = [
   },
   {
     title: "Tools & Practices",
+    icon: "tools",
+    blurb: "How the work actually ships.",
     items: [
       "Git & GitHub",
       "GitHub Actions",
-      "Vercel",
       "REST APIs",
+      "Vercel",
       "Agile / Scrum",
       "Debugging",
       "Code Review"
